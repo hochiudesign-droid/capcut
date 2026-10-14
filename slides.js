@@ -7,6 +7,7 @@ const fullscreen = document.getElementById('fullscreen');
 const counter = document.getElementById('counter');
 const videoPanel = document.getElementById('slide-three-videos');
 const slideVideos = [...videoPanel.querySelectorAll('video')];
+const imagePanel = document.getElementById('slide-four-media');
 let current = 0;
 let idleTimer;
 
@@ -42,6 +43,7 @@ function show(index, updateUrl = true) {
     slide.setAttribute('aria-hidden', String(i !== current));
   });
   syncVideos();
+  imagePanel.hidden = current !== 3;
   counter.textContent = `${current + 1} / ${slides.length}`;
   prev.disabled = current === 0;
   next.disabled = current === slides.length - 1;
