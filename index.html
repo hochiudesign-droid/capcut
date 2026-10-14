@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="即梦 × 小云雀设计工作流，12 页高清图片演示。">
+  <title>即梦 × 小云雀 · 设计工作流</title>
+  <link rel="preload" as="image" href="assets/background.png?v=ae6e16ddc7b6" imagesrcset="assets/background.png?v=ae6e16ddc7b6 1920w, assets/2x/background.png?v=c7ac722739d4 3840w, assets/original/background.png?v=adadf71f94a9 5760w" imagesizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh">
+  <link rel="preload" as="image" href="assets/01.png?v=6c1233ed9473" imagesrcset="assets/01.png?v=6c1233ed9473 1920w, assets/2x/01.png?v=e97b9673e35f 3840w, assets/original/01.png?v=066ba59f4ef8 5760w" imagesizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #000; }
+    body { color: #fff; font-family: system-ui, sans-serif; }
+    #viewer { position: fixed; inset: 0; overflow: hidden; touch-action: pan-y; }
+    #canvas { position: absolute; width: 1920px; height: 1080px; left: 50%; top: 50%; transform-origin: 0 0; }
+    #canvas img { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: contain; user-select: none; pointer-events: none; }
+    #slide-background { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    #background-animation, #background-shade { position: absolute; inset: 0; }
+    #background-animation { z-index: 0; background-image: url('assets/ub_grid_small.gif?v=4d599d8aa41d'); background-repeat: repeat; background-position: 0 0; background-size: 560px 420px; }
+    #background-shade { z-index: 1; background: linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 1) 100%); }
+    #background { z-index: 2; }
+    .content { z-index: 1; visibility: hidden; }
+    .content.active { visibility: visible; }
+    #controls { position: fixed; z-index: 3; bottom: max(18px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 6px; border: 1px solid #ffffff24; border-radius: 14px; background: #161616eb; transition: opacity .2s; }
+    body.idle #controls { opacity: 0; pointer-events: none; }
+    body.idle { cursor: none; }
+    #controls:focus-within { opacity: 1; pointer-events: auto; }
+    button { height: 38px; min-width: 40px; border: 0; border-radius: 9px; background: transparent; color: #ddd; font-size: 19px; cursor: pointer; }
+    button:hover { background: #ffffff18; color: #fff; }
+    button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    button:disabled { opacity: .25; cursor: default; }
+    #counter { min-width: 66px; font-size: 13px; font-variant-numeric: tabular-nums; text-align: center; }
+    .divider { width: 1px; height: 20px; background: #ffffff25; margin: 0 4px; }
+    #error { position: fixed; inset: 0; display: none; place-items: center; background: #000; z-index: 4; text-align: center; padding: 24px; }
+    @media (prefers-reduced-motion: reduce) { #controls { transition: none; } }
+  </style>
+</head>
+<body>
+  <main id="viewer" aria-label="即梦 × 小云雀设计工作流演示文稿">
+    <div id="canvas">
+      <div id="slide-background" aria-hidden="true">
+        <div id="background-animation"></div>
+        <div id="background-shade"></div>
+      <img id="background" src="assets/background.png?v=ae6e16ddc7b6" alt="" srcset="assets/background.png?v=ae6e16ddc7b6 1920w, assets/2x/background.png?v=c7ac722739d4 3840w, assets/original/background.png?v=adadf71f94a9 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      </div>
+      <img class="content active" src="assets/01.png?v=6c1233ed9473" alt="第 1 页：即梦 × 小云雀 设计工作流" srcset="assets/01.png?v=6c1233ed9473 1920w, assets/2x/01.png?v=e97b9673e35f 3840w, assets/original/01.png?v=066ba59f4ef8 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/02.png?v=481d757fac8a" alt="第 2 页：设计 组件 实验" srcset="assets/02.png?v=481d757fac8a 1920w, assets/2x/02.png?v=086b3b3cf24d 3840w, assets/original/02.png?v=0d82bb4ccf5d 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/03.png?v=f076bced113f" alt="第 3 页：即梦 设计 2.0" srcset="assets/03.png?v=f076bced113f 1920w, assets/2x/03.png?v=a6ad8cdb126e 3840w, assets/original/03.png?v=397032414b36 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/04.png?v=b7a2e0f85af4" alt="第 4 页：做 设计" srcset="assets/04.png?v=b7a2e0f85af4 1920w, assets/2x/04.png?v=00378c1fe6de 3840w, assets/original/04.png?v=890d83e35e72 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/05.png?v=5137d4a6470b" alt="第 5 页：搭 组件" srcset="assets/05.png?v=5137d4a6470b 1920w, assets/2x/05.png?v=c02ad30db2ce 3840w, assets/original/05.png?v=69e19a5c8c17 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/06.png?v=5137d4a6470b" alt="第 6 页：搭 组件" srcset="assets/06.png?v=5137d4a6470b 1920w, assets/2x/06.png?v=c02ad30db2ce 3840w, assets/original/06.png?v=69e19a5c8c17 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/07.png?v=5137d4a6470b" alt="第 7 页：搭 组件" srcset="assets/07.png?v=5137d4a6470b 1920w, assets/2x/07.png?v=c02ad30db2ce 3840w, assets/original/07.png?v=69e19a5c8c17 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/08.png?v=5137d4a6470b" alt="第 8 页：搭 组件" srcset="assets/08.png?v=5137d4a6470b 1920w, assets/2x/08.png?v=c02ad30db2ce 3840w, assets/original/08.png?v=69e19a5c8c17 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/09.png?v=5137d4a6470b" alt="第 9 页：搭 组件" srcset="assets/09.png?v=5137d4a6470b 1920w, assets/2x/09.png?v=c02ad30db2ce 3840w, assets/original/09.png?v=69e19a5c8c17 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/10.png?v=299d26a9104f" alt="第 10 页：做 实验" srcset="assets/10.png?v=299d26a9104f 1920w, assets/2x/10.png?v=e9d9f70f940a 3840w, assets/original/10.png?v=688661dd15fd 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/11.png?v=55378ceb7746" alt="第 11 页：设计 不打烊" srcset="assets/11.png?v=55378ceb7746 1920w, assets/2x/11.png?v=4e793e95b850 3840w, assets/original/11.png?v=736afecb096a 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <img class="content" src="assets/12.png?v=2e629e8dd2d5" alt="第 12 页：THX" srcset="assets/12.png?v=2e629e8dd2d5 1920w, assets/2x/12.png?v=2f2b2ac5cf5e 3840w, assets/original/12.png?v=3a2c4fcb7916 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+    </div>
+  </main>
+  <nav id="controls" aria-label="演示控制">
+    <button id="prev" aria-label="上一页" title="上一页（←）">‹</button>
+    <span id="counter" role="status" aria-live="polite">1 / 12</span>
+    <button id="next" aria-label="下一页" title="下一页（→ / 空格）">›</button>
+    <span class="divider"></span>
+    <button id="fullscreen" aria-label="进入全屏" title="全屏（F）">⛶</button>
+  </nav>
+  <div id="error" role="alert">图片加载失败，请刷新页面重试。</div>
+  <script src="slides.js"></script>
+</body>
+</html>
