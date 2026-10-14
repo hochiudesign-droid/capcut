@@ -5,8 +5,24 @@ const prev = document.getElementById('prev');
 const next = document.getElementById('next');
 const fullscreen = document.getElementById('fullscreen');
 const counter = document.getElementById('counter');
+const videoPanel = document.getElementById('slide-three-videos');
+const slideVideos = [...videoPanel.querySelectorAll('video')];
 let current = 0;
 let idleTimer;
+
+function syncVideos() {
+  const active = current === 2;
+  videoPanel.hidden = !active;
+  slideVideos.forEach(video => {
+    if (active && !document.hidden) {
+      if (!video.getAttribute('src')) video.src = video.dataset.src;
+      video.muted = true;
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  });
+}
 
 function fit() {
   const scale = Math.min(viewer.clientWidth / 1920, viewer.clientHeight / 1080);
@@ -25,6 +41,7 @@ function show(index, updateUrl = true) {
     slide.classList.toggle('active', i === current);
     slide.setAttribute('aria-hidden', String(i !== current));
   });
+  syncVideos();
   counter.textContent = `${current + 1} / ${slides.length}`;
   prev.disabled = current === 0;
   next.disabled = current === slides.length - 1;
@@ -88,6 +105,7 @@ document.addEventListener('pointermove', wake, { passive: true });
 document.addEventListener('focusin', wake);
 window.addEventListener('resize', fit);
 window.addEventListener('hashchange', readHash);
+document.addEventListener('visibilitychange', syncVideos);
 document.querySelectorAll('#canvas img').forEach(img => img.addEventListener('error', () => {
   document.getElementById('error').style.display = 'grid';
 }));

@@ -21,6 +21,9 @@
     #background { z-index: 2; }
     .content { z-index: 1; visibility: hidden; }
     .content.active { visibility: visible; }
+    #slide-three-videos { position: absolute; z-index: 2; top: 100px; right: 100px; display: flex; gap: 50px; pointer-events: none; }
+    #slide-three-videos[hidden] { display: none; }
+    #slide-three-videos video { display: block; width: 359px; height: 780px; border-radius: 48px; object-fit: cover; background: #111; }
     #controls { position: fixed; z-index: 3; bottom: max(18px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 6px; border: 1px solid #ffffff24; border-radius: 14px; background: #161616eb; transition: opacity .2s; }
     body.idle #controls { opacity: 0; pointer-events: none; }
     body.idle { cursor: none; }
@@ -55,6 +58,11 @@
       <img class="content" src="assets/10.png?v=299d26a9104f" alt="第 10 页：做 实验" srcset="assets/10.png?v=299d26a9104f 1920w, assets/2x/10.png?v=e9d9f70f940a 3840w, assets/original/10.png?v=688661dd15fd 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
       <img class="content" src="assets/11.png?v=55378ceb7746" alt="第 11 页：设计 不打烊" srcset="assets/11.png?v=55378ceb7746 1920w, assets/2x/11.png?v=4e793e95b850 3840w, assets/original/11.png?v=736afecb096a 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
       <img class="content" src="assets/12.png?v=2e629e8dd2d5" alt="第 12 页：THX" srcset="assets/12.png?v=2e629e8dd2d5 1920w, assets/2x/12.png?v=2f2b2ac5cf5e 3840w, assets/original/12.png?v=3a2c4fcb7916 5760w" sizes="(max-aspect-ratio: 16/9) 100vw, 177.777778vh" draggable="false">
+      <div id="slide-three-videos" hidden aria-label="第 3 页视频展示">
+        <video data-src="assets/videos/video_01.mp4?v=46ec449f99fa" autoplay loop muted playsinline preload="auto" aria-label="视频 01"></video>
+        <video data-src="assets/videos/video_02.mp4?v=b6518240cea7" autoplay loop muted playsinline preload="auto" aria-label="视频 02"></video>
+        <video data-src="assets/videos/video_03.mp4?v=048195a2e36e" autoplay loop muted playsinline preload="auto" aria-label="视频 03"></video>
+      </div>
     </div>
   </main>
   <nav id="controls" aria-label="演示控制">
@@ -65,6 +73,6 @@
     <button id="fullscreen" aria-label="进入全屏" title="全屏（F）">⛶</button>
   </nav>
   <div id="error" role="alert">图片加载失败，请刷新页面重试。</div>
-  <script src="slides.js"></script>
+  <script src="slides.js?v=80e7c640841f"></script>
 </body>
 </html>
