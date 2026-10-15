@@ -5,23 +5,24 @@ const prev = document.getElementById('prev');
 const next = document.getElementById('next');
 const fullscreen = document.getElementById('fullscreen');
 const counter = document.getElementById('counter');
-const videoPanel = document.getElementById('slide-three-videos');
-const slideVideos = [...videoPanel.querySelectorAll('video')];
+const videoPanels = [...document.querySelectorAll('.slide-videos')];
 const imagePanels = [...document.querySelectorAll('.slide-media')];
 let current = 0;
 let idleTimer;
 
 function syncVideos() {
-  const active = current === 2;
-  videoPanel.hidden = !active;
-  slideVideos.forEach(video => {
-    if (active && !document.hidden) {
-      if (!video.getAttribute('src')) video.src = video.dataset.src;
-      video.muted = true;
-      video.play().catch(() => {});
-    } else {
-      video.pause();
-    }
+  videoPanels.forEach(panel => {
+    const active = Number(panel.dataset.page) === current + 1;
+    panel.hidden = !active;
+    panel.querySelectorAll('video').forEach(video => {
+      if (active && !document.hidden) {
+        if (!video.getAttribute('src')) video.src = video.dataset.src;
+        video.muted = true;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
   });
 }
 
